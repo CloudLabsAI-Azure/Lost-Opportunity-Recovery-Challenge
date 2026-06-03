@@ -23,9 +23,9 @@ This challenge builds the AI layer that makes those patterns visible. Your syste
    | Enabled Services | `Azure AI Search` <br> `Microsoft AI Foundry` <br> `Azure Document Intelligence` <br> `Azure Blob Storage` <br> `Dynamics 365 Sales Enterprise` <br> `Microsoft 365 Business Basic` <br> `Power Automate Premium` <br> `Microsoft Copilot Studio` | You have full access over the Azure subscription and M365 tenant. Use these services to build the end-to-end opportunity recovery platform. |
    | Azure Entra ID User | Pre-created Entra ID user account | You will get one Entra ID User Account with access to all required services. |
    | Azure Subscription Permissions | **Owner** privilege over Azure Subscription | You will get Owner access to the Azure subscription. |
-   | Azure Credit | **$150 USD** | Consumption limit is set on Azure spend to 150 USD. |
+   | Azure Credit | **$50 USD** | Consumption limit is set on Azure spend to 50 USD. |
    | Credit Alerts | Credit Alerts are set on consumption of 25%, 50%, 75%, 85%, 90%, 95% and 100% of total Azure credits. | Make sure to check your registered email's inbox for any alert-related mails. Alerts give you a head start to keep your Azure spending in control and to plan out the remaining credits in the best way possible. |
-   | Sandbox Duration | 1 Day / 24 Hours or until Azure Consumption Credits are exhausted. | The sandbox environment will be deleted automatically after 24 Hours or once the Azure credits are exhausted, whichever comes first. |
+   | Sandbox Duration | 8 Hours or until Azure Consumption Credits are exhausted. | The sandbox environment will be deleted automatically after 8 Hours or once the Azure credits are exhausted, whichever comes first. |
 
 ---
 
