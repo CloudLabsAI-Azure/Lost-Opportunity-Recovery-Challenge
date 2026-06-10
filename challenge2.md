@@ -1,140 +1,94 @@
-## Day 01 - Afternoon
+# Challenge 2 - Ship the Sales Product
 
-# Challenge 2: Sales Copilot Experience - Interface, Re-engagement & CRM Automation
+## Overview
 
-## Goal
+Wire the intelligence layer you built in Challenge 1 into a product sales reps can actually use. You will build a Copilot Studio agent with conversation topics for loss analysis, strategy recommendations, and re-engagement email drafting. You will also automate the CRM so that every deal marked as lost in Dynamics 365 automatically triggers AI analysis and creates a follow-up task - no manual steps from the rep.
 
-Build the product sales teams actually use. In this challenge, you will wire the intelligence backend from Challenge 1 into a Copilot Studio copilot that gives sales reps and managers direct access to loss analysis, strategy recommendations, and AI-drafted re-engagement emails through a natural conversation. You will build a Power Automate flow that triggers automatically whenever an opportunity is marked as lost in Dynamics 365, runs the AI analysis, and writes the results back into the CRM as follow-up tasks and meeting requests - removing the burden of manual action from the sales rep. You will then deploy the copilot and validate the complete platform end-to-end against real scenarios.
-
-This challenge delivers the finished sales intelligence product built on top of the pipeline you created in Challenge 1.
+The challenge is complete when the copilot is live, the CRM automation has run successfully, and a rep can get grounded recovery guidance through a single conversation.
 
 ---
 
-## Challenge Overview
+## Prerequisites
 
-Challenge 1 gave you the engine. This challenge builds what the driver sees and touches.
-
-The goal is to make the AI-powered recovery intelligence immediately accessible to every sales rep who needs it, in the tools they already use every day. A rep who just lost a deal should not have to open a separate AI tool, run a query, copy the results, write their own email, and then manually log a follow-up task. Every one of those steps should happen automatically, or with a single conversation.
-
-In this challenge, you will build the conversation interface that makes the Foundry agent accessible to sales reps through Copilot Studio, design the CRM automation that ensures no lost opportunity goes unanalyzed or unactioned, and validate the complete platform against scenarios a sales manager would actually run during their workday.
-
-In this challenge, you will:
-
-- Create a Copilot Studio copilot connected to the Foundry agent from Challenge 1, with purpose-built conversation flows for loss analysis, strategy recommendation, and re-engagement email drafting.
-- Build a Power Automate flow triggered by a lost opportunity event in Dynamics 365 that automatically runs analysis and creates follow-up tasks and meeting requests in the CRM.
-- Deploy the copilot to a Microsoft Teams channel or web channel and validate the complete platform through three end-to-end scenarios.
-
-The challenge is complete when a sales rep can receive full loss analysis, a concrete revised strategy, a drafted re-engagement email, and an automatically created CRM follow-up task - all triggered from a single conversation or a CRM status change - without any manual orchestration.
+- Challenge 1 complete - your AI Search index is populated and the Foundry agent is tested.
+- Access to Microsoft Copilot Studio (included with your M365 license).
+- Power Automate Premium (included in your environment).
+- Dynamics 365 Sales access (pre-provisioned).
 
 ---
 
 ## Objectives
 
-### 1. Sales Intelligence Copilot Interface
+### 1. Sales Intelligence Copilot
 
-Build the Copilot Studio copilot that gives sales reps conversational access to the Foundry agent's capabilities for loss analysis, revised strategy generation, and re-engagement drafting.
+Create the conversational interface that gives sales reps access to the Foundry agent's capabilities.
 
-- Create a new copilot in Microsoft Copilot Studio connected to the Microsoft AI Foundry agent you built in Challenge 1. Configure the connection so the copilot uses the Foundry agent as its primary intelligence source and the agent's responses are grounded in the AI Search index.
-- Design and implement three core conversation topic flows within the copilot:
-
-  **Flow 1 - Lost Deal Analysis:** The sales rep provides an opportunity name, opportunity ID, or account name. The copilot queries the Foundry agent for a full loss analysis on that deal, including the primary and contributing loss reasons as detected from the deal's content, comparable deals that share the same loss profile, and any patterns specific to the product line, geography, or deal size. The response must be grounded in indexed deal records and readable by a non-technical sales rep.
-
-  **Flow 2 - Revised Strategy Recommendation:** The sales rep describes the loss context or provides the opportunity identifier. The copilot returns a concrete revised strategy specific to the loss category and deal context - including what to change in the approach, what to emphasize or de-emphasize in the next conversation with the account, and any timing or sequencing recommendations for the re-engagement. The strategy must be grounded in historical win patterns from the index where applicable.
-
-  **Flow 3 - Re-engagement Email Drafting:** The sales rep requests a re-engagement email for a specific lost deal or account. The copilot uses the re-engagement profile generated by the Foundry agent and drafts a complete, personalized re-engagement email addressed to the decision-maker. The email must reference the specific concerns raised during the original deal, acknowledge what has changed or can be changed, and include a clear call to action for next contact. The rep may edit the draft before sending.
-
-- Implement conversation state handling so the rep can move between flows without re-entering context they have already provided.
-- Test each topic flow independently against at least two different opportunity scenarios. Confirm that the copilot's responses are grounded, readable, and distinct across different loss reason categories.
-
-Outcome:
-A Copilot Studio copilot is operational with three functioning topic flows, connected to the Foundry intelligence layer, and delivers grounded, actionable responses for loss analysis, revised strategy recommendations, and personalized re-engagement email drafts.
+- Create a new agent in Microsoft Copilot Studio.
+- Connect Azure AI Search as a knowledge source, pointing to your `lost-opportunities` index.
+- Configure the agent instructions to enforce grounded, cited responses - every answer must reference specific indexed deal records, not generic sales advice.
+- Create three conversation topics:
+  - **Lost Deal Analysis** - the rep provides an opportunity or account name; the agent returns the primary and contributing loss reasons detected from indexed deal content, and references comparable deals with the same loss profile.
+  - **Revised Strategy** - the rep describes the loss context; the agent returns a specific, actionable revised strategy grounded in historical patterns from the index - not generic advice.
+  - **Re-engagement Email** - the rep requests a draft email for a specific lost deal; the agent produces a personalized email referencing the decision-maker's documented concerns, the revised approach, and a clear call to action.
+- Configure a fallback topic that returns a clear "not found" message for out-of-scope queries.
+- Test each topic in the Copilot Studio canvas before publishing.
 
 ---
 
 ### 2. CRM Automation with Power Automate
 
-Build the automated workflow that ensures every deal marked as lost in Dynamics 365 is automatically analyzed, actioned, and followed up in the CRM - with no manual intervention required from the sales rep or manager.
+Build the automation that ensures no lost deal goes unanalyzed.
 
-- Create a Power Automate Premium flow using a Dynamics 365 trigger. The flow must fire whenever an opportunity record in Dynamics 365 is updated with a status of Closed as Lost (or equivalent in your tenant configuration).
-- Configure the flow to execute the following automated actions in sequence:
-
-  1. Retrieve the full opportunity record including associated notes, email log metadata, and activity history.
-  2. Invoke the Foundry agent (via HTTP action or AI Builder connector) to run loss pattern analysis and re-engagement profile generation on the retrieved opportunity data.
-  3. Parse the Foundry agent response and extract: primary loss reason, top contributing factors, revised strategy recommendation, and re-engagement profile summary.
-  4. Create a follow-up task in Dynamics 365 linked to the opportunity record. The task description must include the AI-generated analysis summary and the recommended first re-engagement action. Set a due date of five business days from the opportunity close date.
-  5. (Optional) Create an Outlook calendar event for the assigned sales rep as a re-engagement reminder, scheduled at a reasonable interval following the close date.
-
-- Implement error handling so that if the Foundry agent call fails, the flow does not create a blank or corrupted task. Log the failure and send a notification to the rep so the analysis can be triggered manually.
-- Test the flow end-to-end by changing the status of a test opportunity to Closed as Lost and confirming that a follow-up task is created in Dynamics 365 with the AI analysis summary populated in the task description within the expected time window.
-
-Outcome:
-A Power Automate flow is operational and verified. When an opportunity is closed as lost in Dynamics 365, the flow automatically runs AI analysis and creates a follow-up task in the CRM with the analysis results and recommended re-engagement actions - requiring no manual steps from the sales rep.
+- Create a Power Automate Premium flow with a Dynamics 365 trigger that fires when an opportunity is updated to **Closed as Lost**.
+- Configure the flow to:
+  - Retrieve the full opportunity record including notes and activity history.
+  - Call the AI Search index (or the Foundry agent via HTTP/AI Builder) to run loss analysis on the retrieved deal data.
+  - Create a follow-up task in Dynamics 365 linked to the opportunity, with the AI-generated analysis summary and recommended first re-engagement action in the task description. Set a due date of 5 business days from close date.
+- Add error handling: if the AI call fails, do not create a blank task - log the failure and notify the rep to trigger analysis manually.
+- Test the flow by changing a test opportunity status to Closed as Lost. Confirm the follow-up task is created in Dynamics 365 with the AI content populated.
 
 ---
 
-### 3. Deployment & End-to-End Validation
+### 3. Publish and Validate
 
-Deploy the copilot to a channel accessible to the sales team and validate the complete platform against three representative sales scenarios that cover the full range of system capabilities.
+Deploy the copilot and validate the complete system end-to-end.
 
-- Publish the Copilot Studio copilot to either Microsoft Teams (recommended for manufacturing sales teams) or as a standalone web channel. If deploying to Teams, add the copilot to a sales team channel and confirm it is accessible to the user accounts in your environment.
-- Run the following three end-to-end validation scenarios and document the results:
-
-  **Scenario A - Loss Analysis for a Named Competitor Deal:** Provide the copilot with an opportunity that was lost to a named competitor. Verify that the copilot returns a grounded analysis identifying the competitor as a factor, references comparable deals from the index where the same competitor appeared, and quantifies the pattern (how many similar deals were lost to this competitor and under what conditions).
-
-  **Scenario B - Pricing Objection Strategy Recommendation:** Select a deal from the dataset that was lost due to a pricing objection. Ask the copilot for a revised strategy. Verify that the strategy is specific to the pricing context of that deal - not generic cost reduction advice - and includes at minimum one concrete recommendation tied to the deal's product line, account type, or deal size. Confirm the strategy is grounded in indexed data.
-
-  **Scenario C - Re-engagement Email for a High-Value Lost Deal:** Select the highest-value deal in your dataset that is currently in closed-lost status. Request a re-engagement email from the copilot. Verify that the email: addresses the decision-maker by name or role, references the specific concerns documented during the original deal, reflects the revised strategy for that loss category, and includes a clear re-engagement call to action. Confirm the email content is personalized - not a templated placeholder.
-
-- For each scenario, the response must be grounded in data from the AI Search index. Responses that rely on generic language models without grounding in the indexed deal records are not acceptable for this challenge.
-- After completing the three scenarios, trigger the Power Automate flow by closing a test opportunity and confirm that the follow-up task created in Dynamics 365 contains the AI-generated analysis and action summary.
-
-Outcome:
-The complete sales intelligence platform is deployed and operational. The copilot delivers grounded, actionable responses for all three validation scenarios. The Power Automate CRM automation is confirmed to create follow-up tasks in Dynamics 365 with AI analysis content populated.
+- Publish the copilot to a web channel or Microsoft Teams channel.
+- Open the channel and confirm the copilot loads and responds.
+- Run the following three validation scenarios through the live channel:
+  - **Scenario A - Competitor Loss Analysis:** Provide an opportunity lost to a named competitor. Confirm the response identifies the competitor, references comparable deals, and describes the loss pattern.
+  - **Scenario B - Pricing Strategy:** Select a deal lost due to pricing objection. Ask for a revised strategy. Confirm the response is specific to that deal's context - not generic cost-cutting advice.
+  - **Scenario C - Re-engagement Email:** Select a high-value lost deal. Request a re-engagement email. Confirm the email addresses the decision-maker by name/role, references specific concerns from the deal record, and includes a clear call to action.
+- All three responses must be grounded in indexed deal data. Generic responses without deal-level citations are not acceptable.
 
 ---
 
-## Expected Outcomes
+## Success Criteria
 
-By the end of Challenge 2:
+Before submitting, confirm the following:
 
-- A Copilot Studio copilot is connected to the Foundry agent and operational with three topic flows: lost deal analysis, revised strategy recommendation, and re-engagement email drafting.
-- A Power Automate flow monitors Dynamics 365 for lost opportunity events and automatically runs AI analysis, creating follow-up tasks in the CRM with the analysis summary and re-engagement recommendations.
-- The copilot is deployed to a Microsoft Teams channel or web channel and accessible to sales team accounts in the environment.
-- Three end-to-end validation scenarios confirm that grounded loss analysis, specific strategy recommendations, and personalized re-engagement emails are all delivered correctly through the copilot interface.
-- The automated CRM workflow is verified end-to-end with a confirmed task creation in Dynamics 365 following a test opportunity closure.
+- The Copilot Studio agent is connected to your AI Search index.
+- Three conversation topics are created and tested in the canvas.
+- The fallback topic returns a "not found" message for out-of-scope queries.
+- The copilot is published and accessible via a live channel.
+- The Power Automate flow runs successfully when an opportunity is closed as lost.
+- A follow-up task is created in Dynamics 365 with AI-generated analysis content in the description.
+- All three validation scenarios return grounded, cited responses through the live channel.
 
 ---
 
-## Completion Criteria (Mandatory Submission)
+## Submission
 
-Please use the instructions provided below and follow the submission steps carefully:
+Take three screenshots and keep them ready for upload:
 
-Once you complete this challenge, you must:
+1. The copilot in the live channel (URL bar or Teams context visible) showing a grounded response to one of the three validation scenarios.
+2. The Power Automate flow run history showing a successful run triggered by a Dynamics 365 status change.
+3. A Dynamics 365 opportunity record showing the automatically created follow-up task with AI analysis content in the task description.
 
-1. Keep the below artifacts ready to be uploaded:
+Name your files: `<Your_Name>_Challenge02_<file01>_<HH:MM>`, `<file02>`, `<file03>` (same pattern).
 
-   - A screenshot of the deployed copilot in Microsoft Teams or the web channel showing a complete copilot response to one of the three validation scenarios. The screenshot must show the channel URL or Teams context and a full response grounded in deal data.
-   - A screenshot of the Power Automate flow run history confirming a successful run that was triggered by a Dynamics 365 opportunity status change. The run history must show all steps completed without error.
-   - A screenshot of a Dynamics 365 opportunity record showing the automatically created follow-up task with AI analysis content in the task description.
+Navigate to the **Hackathon Portal > Learning Resources**, scroll to **Upload Your Certificate**, and submit all three files.
 
-1. Name the screenshots using the below naming convention:
+---
 
-   - `<Your_Name>_<Challenge02>_<file01>_<Time_Stamp(HH:MM)>`
-   - `<Your_Name>_<Challenge02>_<file02>_<Time_Stamp(HH:MM)>`
-   - `<Your_Name>_<Challenge02>_<file03>_<Time_Stamp(HH:MM)>`
-
-1. Navigate back to **Hackathon Portal** where you registered for the hackathon.
-
-1. In the hackathon portal, select **Learning Resources** page.
-
-   ![](./media/hackportalv2.png)
-
-1. Scroll down to bottom, under **Upload Your Certificate**, click **upload Certificate** and upload the artifacts that you have prepared earlier.
-
-   ![](./media/hack2.png)
-
-This submission is mandatory.
-
-Failure to submit these artifacts will result in the challenge being marked as incomplete.
-
-## Congratulations! You have successfully completed Challenge 2
+Click **Next** at the bottom of the page to proceed to the Bonus Challenge.

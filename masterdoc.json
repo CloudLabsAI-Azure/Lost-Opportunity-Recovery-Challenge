@@ -30,13 +30,6 @@
       "Order": 4,
       "BaseURL": "https://github.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge",
       "RawURL": "https://raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/main/challenge2.md"
-    },
-    {
-      "Name": "cleanup",
-      "FileName": "cleanup.md",
-      "Order": 5,
-      "BaseURL": "https://github.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge",
-      "RawURL": "https://raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/main/cleanup.md"
     }
   ]
 }
