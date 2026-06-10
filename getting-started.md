@@ -56,7 +56,7 @@ Feel free to start, stop, or restart your virtual machine as needed from the Res
 
 ## Explore Your Dynamics 365 Environment
 
-Your sandbox includes a pre-configured Dynamics 365 Sales Enterprise environment with seeded sample data. Before starting the challenge, familiarise yourself with what is available.
+Your sandbox includes a pre-configured Dynamics 365 Sales Enterprise environment. You will import the opportunity dataset in the next section.
 
 1. Open a new browser tab and navigate to Dynamics 365 Sales:
 
@@ -66,34 +66,53 @@ Your sandbox includes a pre-configured Dynamics 365 Sales Enterprise environment
 
    Sign in with the provided credentials and select the pre-provisioned environment from the environment selector in the top-right corner.
 
-1. Navigate to **Sales** > **Opportunities** and confirm that sample opportunity records are present. Your environment includes at minimum:
+1. Navigate to **Sales** > **Opportunities** and confirm the app loads correctly. The opportunities list will be empty at this point - you will import the dataset in the next section.
 
-   - 20 closed-lost opportunity records across at least four distinct loss reason categories (pricing, competitor, delayed response, product fit, and long approval cycle).
-   - Each opportunity record contains at minimum: account name, product line, deal value, close date, loss reason (field), owner, and activity history including notes and email logs.
-
-   > **Note:** If the opportunity records are not visible, navigate to the Environment tab in your challenge portal to confirm you are connected to the correct Dynamics 365 environment. Contact CloudLabs support if the data is missing.
-
-1. Open two or three opportunity records and review the **Timeline** section. The activity history - emails, notes, and call logs - is the raw content your extraction pipeline will process. Understanding this structure will help you design the export and indexing logic.
+   > **Note:** If you cannot access the Opportunities view, confirm you are in the correct Dynamics 365 environment. Navigate to **Settings > Advanced Settings > Security > Users** and verify your user account has the **System Administrator** role assigned.
 
 ---
 
-## Export Your Opportunity Dataset
+## Import the Opportunity Dataset
 
-Before starting Challenge 1, you need the raw data from Dynamics 365 available in Azure Blob Storage. This is the starting point for your extraction and indexing pipeline.
+Your environment does not have pre-seeded sales data. Import the provided dataset to populate Dynamics 365 with 20 closed-lost opportunity records across five loss reason categories before starting Challenge 1.
 
-1. From Dynamics 365 Sales, navigate to **Opportunities** and filter the view to show only **Closed as Lost** records.
+1. Download the dataset file from the lab repository:
 
-1. Export the opportunity records to a file format suitable for downstream processing. You may use the built-in Dynamics 365 export to Excel, Power Automate to extract and write to Blob Storage, or the Dynamics 365 Web API to programmatically export records with their associated notes and activities.
+   ```
+   https://raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/main/data/opportunities.csv
+   ```
 
-   Consider what fields and associated records you will need in your extraction pipeline:
-   - Core opportunity fields: name, account, product line, deal value, expected close date, actual close date, loss reason (field value), owner
-   - Associated notes and description text
-   - Email subject lines and body text logged against the opportunity
-   - Call log summaries
+   Save the file to your Desktop or Downloads folder.
 
-1. Upload or write the exported files to your Azure Blob Storage account. Organize them in a way that makes the source clear - for example, a folder per loss reason category or per account.
+1. In Dynamics 365 Sales, select the **Settings** gear icon (top right) and navigate to **Advanced Settings**.
 
-   > **Note:** You do not need to export every field. Focus on the content that a sales analyst would actually read to understand why a deal was lost.
+1. In the Business Management area, select **Data Management**, then select **Imports**.
+
+1. Select **Import Data** and upload the `opportunities.csv` file you downloaded.
+
+1. On the **Upload Data File** page, confirm the file type is detected as CSV and select **Next**.
+
+1. On the **Select Data Map** page, select **Default (Automatic Mapping)** and select **Next**.
+
+1. On the **Map Record Types** page, map the file to the **Opportunity** record type and select **Next**.
+
+1. On the **Map Fields** page, confirm the following column mappings:
+
+   | CSV Column | Dynamics 365 Field |
+   |---|---|
+   | Topic | Topic |
+   | Account Name | Potential Customer |
+   | Estimated Revenue | Est. Revenue |
+   | Actual Close Date | Actual Close Date |
+   | Description | Description |
+
+   Map any remaining columns as best fit and select **Next**.
+
+1. On the **Review Settings and Import Data** page, select **Submit** to start the import. The import runs in the background and typically completes within 2-3 minutes.
+
+1. Navigate to **Opportunities** and confirm 20 records are present. Filter by **Status Reason = Lost** to verify the closed-lost records are visible.
+
+   > **Note:** If the import fails or record count is less than 20, re-download the CSV and retry. Ensure the file was not modified before upload. Contact CloudLabs support if the issue persists.
 
 ---
 
@@ -106,7 +125,6 @@ Confirm you can access all services that will be used during the challenge befor
    - Azure Storage Account
    - Azure AI Search instance
    - Azure AI Foundry workspace (or confirm you can create one)
-   - Azure Document Intelligence resource
 
 1. Open a new browser tab and navigate to Microsoft Copilot Studio:
 
