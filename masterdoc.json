@@ -1,35 +1,25 @@
-{
-  "Name": "Recommendations on Lost/Dropped Opportunities with Revised Strategy Suggestions",
-  "Type": "Challenge_Lab",
-  "Version": "1.0",
-  "Details": [
+[
     {
-      "Name": "overview",
-      "FileName": "overview.md",
-      "Order": 1,
-      "BaseURL": "https://github.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge",
-      "RawURL": "https://raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/main/overview.md"
-    },
-    {
-      "Name": "getting-started",
-      "FileName": "getting-started.md",
-      "Order": 2,
-      "BaseURL": "https://github.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge",
-      "RawURL": "https://raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/main/getting-started.md"
-    },
-    {
-      "Name": "challenge1",
-      "FileName": "challenge1.md",
-      "Order": 3,
-      "BaseURL": "https://github.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge",
-      "RawURL": "https://raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/main/challenge1.md"
-    },
-    {
-      "Name": "challenge2",
-      "FileName": "challenge2.md",
-      "Order": 4,
-      "BaseURL": "https://github.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge",
-      "RawURL": "https://raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/main/challenge2.md"
+        "Name": "Recommendations on Lost/Dropped Opportunities with Revised Strategy Suggestions",
+        "Language": "English",
+        "BaseURL": "https://github.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge.git",
+        "Files": [
+            {
+                "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/refs/heads/main/overview.md",
+                "Order": 1
+            },
+            {
+                "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/refs/heads/main/getting-started.md",
+                "Order": 2
+            },
+            {
+                "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/refs/heads/main/challenge1.md",
+                "Order": 3
+            },
+            {
+                "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/refs/heads/main/challenge2.md",
+                "Order": 4
+            }
+        ]
     }
-  ]
-}
+]
