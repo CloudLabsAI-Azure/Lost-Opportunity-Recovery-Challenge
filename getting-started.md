@@ -88,32 +88,18 @@ Your environment does not have pre-seeded sales data. Import the provided datase
 
    Save the file to your Desktop or Downloads folder.
 
-1. In Dynamics 365 Sales, select the **Settings** gear icon (top right) and navigate to **Advanced Settings**.
+1. In Sales Hub, navigate to **Sales** > **Opportunities**. On the Opportunities list toolbar, select **Import from Excel** (or look for an **Import** option in the toolbar or the **...** menu).
 
-1. In the Business Management area, select **Data Management**, then select **Imports**.
+1. In the **Import from CSV** dialog, select **Choose File** and upload the `opportunities.csv` file. Select **Next**.
 
-1. Select **Import Data** and upload the `opportunities.csv` file you downloaded.
+1. On the **Map Attributes** page, three fields will auto-map. Manually map the remaining field:
 
-1. On the **Upload Data File** page, confirm the file type is detected as CSV and select **Next**.
+   - For **Est. Revenue** - select **Est. Revenue** from the dropdown
+   - Leave **Potential Customer** as **Not Mapped (Use Default)** - it is a lookup field and can be skipped
 
-1. On the **Select Data Map** page, select **Default (Automatic Mapping)** and select **Next**.
+1. Select **Finish Import**. The import runs in the background and typically completes within 2-3 minutes.
 
-1. On the **Map Record Types** page, map the file to the **Opportunity** record type and select **Next**.
-
-1. On the **Map Fields** page, confirm all four columns are mapped correctly:
-
-   | CSV Column | Dynamics 365 Field |
-   |---|---|
-   | Topic | Topic |
-   | Est. Revenue | Est. Revenue |
-   | Actual Close Date | Actual Close Date |
-   | Description | Description |
-
-   All four fields should auto-map. Select **Next**.
-
-1. On the **Review Settings and Import Data** page, select **Submit** to start the import. The import runs in the background and typically completes within 2-3 minutes.
-
-1. Navigate to **Opportunities** and confirm 20 records are present. Filter by **Status Reason = Lost** to verify the closed-lost records are visible.
+1. Refresh the **Opportunities** list and confirm 20 records are present.
 
    > **Note:** If the import fails or record count is less than 20, re-download the CSV and retry. Ensure the file was not modified before upload. Contact CloudLabs support if the issue persists.
 
