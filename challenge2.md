@@ -37,15 +37,23 @@ Create the conversational interface that gives sales reps access to the Foundry 
 
 ### 2. CRM Automation with Power Automate
 
-Build the automation that ensures no lost deal goes unanalyzed.
+Build the automation that ensures no lost deal goes unanalyzed. When a rep marks an opportunity as lost in Dynamics 365, the flow automatically runs AI analysis and creates a follow-up task - no manual steps required.
 
-- Create a Power Automate Premium flow with a Dynamics 365 trigger that fires when an opportunity is updated to **Closed as Lost**.
-- Configure the flow to:
-  - Retrieve the full opportunity record including notes and activity history.
-  - Call the AI Search index (or the Foundry agent via HTTP/AI Builder) to run loss analysis on the retrieved deal data.
-  - Create a follow-up task in Dynamics 365 linked to the opportunity, with the AI-generated analysis summary and recommended first re-engagement action in the task description. Set a due date of 5 business days from close date.
-- Add error handling: if the AI call fails, do not create a blank task - log the failure and notify the rep to trigger analysis manually.
-- Test the flow by changing a test opportunity status to Closed as Lost. Confirm the follow-up task is created in Dynamics 365 with the AI content populated.
+- In Power Automate, create a new automated cloud flow.
+- Set the trigger to **Microsoft Dataverse - When a row is added, modified or deleted**. Configure it to watch the **Opportunities** table for **Modified** rows.
+  - Add a filter condition so the flow only runs when **Status Reason** equals **Lost** (value: `5`).
+- Add a **Microsoft Dataverse - Get a row by ID** action to retrieve the full opportunity record using the row ID from the trigger.
+- Add an **AI Builder - Create text with GPT** action. In the prompt field, compose a message that passes the opportunity **Topic** and **Description** from the previous step and instructs the model to:
+  - Identify the primary loss reason based on the deal content.
+  - Recommend one specific re-engagement action the rep should take first.
+  - Keep the output concise - suitable for a task description field.
+- Add a **Microsoft Dataverse - Add a new row** action to create a **Task** record linked to the opportunity:
+  - Set **Regarding** to the opportunity record ID.
+  - Set **Subject** to something like: `AI Recovery Analysis - [opportunity topic]`
+  - Set **Description** to the output from the AI Builder step.
+  - Set **Due Date** to 5 business days from today.
+- Add a **Condition** action after the AI Builder step to check if the output is empty. If the AI call returns no content, use **Send an email (V2)** to notify the assigned rep to run manual analysis.
+- Save and test the flow by opening one of your imported opportunity records in D365 and changing the **Status Reason** to **Lost**. Confirm the Task record is created and the Description contains AI-generated content.
 
 ---
 
