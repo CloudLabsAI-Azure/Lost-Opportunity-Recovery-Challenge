@@ -6,7 +6,7 @@ We've prepared a seamless environment for you to explore and learn. Let's begin 
 
 Once you're ready to dive in, your virtual machine and challenge guide will be right at your fingertips within your web browser.
 
-![](./media/know-ent-gs-g1.png)
+![](./media/know-ent-gs-g12.png)
 
 ### Exploring Your Challenge Resources
 
@@ -32,7 +32,7 @@ Feel free to start, stop, or restart your virtual machine as needed from the Res
 
 1. In the JumpVM, click on **Azure Portal** browser shortcut which is created on the desktop.
 
-   ![](./media/know-ent-gs-g2.png)
+   ![](./media/know-ent-gs-g11.png)
 
 1. On the **Sign into Microsoft** tab, you will see the login screen. Enter the provided email or username and click **Next** to proceed.
 
