@@ -6,7 +6,7 @@ We've prepared a seamless environment for you to explore and learn. Let's begin 
 
 Once you're ready to dive in, your virtual machine and challenge guide will be right at your fingertips within your web browser.
 
-![](./media/gs1.png)
+![](./media/know-ent-gs-g1.png)
 
 ### Exploring Your Challenge Resources
 
@@ -28,13 +28,11 @@ Feel free to start, stop, or restart your virtual machine as needed from the Res
 
 > **Note:** If the VM is not in use, please **deallocate** it to avoid unnecessary resource consumption.
 
----
-
 ## Let's Get Started with Microsoft Azure
 
 1. In the JumpVM, click on **Azure Portal** browser shortcut which is created on the desktop.
 
-   ![](./media/gs-up1.png)
+   ![](./media/know-ent-gs-g2.png)
 
 1. On the **Sign into Microsoft** tab, you will see the login screen. Enter the provided email or username and click **Next** to proceed.
 
@@ -54,58 +52,34 @@ Feel free to start, stop, or restart your virtual machine as needed from the Res
 
 ---
 
-## Download the Opportunity Dataset
+## Copilot studio
 
-A dataset of 20 closed-lost opportunity records has been prepared for this lab. You will upload this file to Azure Blob Storage in Challenge 1 - download it now so it is ready.
-
-1. Download the dataset file:
-
-   ```
-   https://raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/main/data/opportunities.csv
-   ```
-
-   Save the file to your Desktop or Downloads folder. This CSV contains 20 lost deals across five loss reason categories (Pricing, Competitor, Product Fit, Long Approval Cycle, Delayed Response) and is the data source you will index in Challenge 1.
-
----
-
-## Verify Access to Required Services
-
-Confirm you can access all services that will be used during the challenge before you begin:
-
-1. From the Azure Portal, verify that the following resources are present in your assigned resource group:
-
-   - Azure Storage Account
-   - Azure AI Search instance
-   - Azure AI Foundry workspace (or confirm you can create one)
-
-1. Open a new browser tab and navigate to Microsoft Copilot Studio:
+1. Navigate to **Microsoft Copilot Studio** by opening a new browser tab and entering the following URL:
 
    ```
    https://copilotstudio.microsoft.com
    ```
 
-   Sign in with the provided credentials and confirm access is granted.
+1. On the **Welcome to Microsoft Copilot Studio** screen, keep the default **country/region** selection and click **Get Started** to continue.
 
-1. Open another browser tab and navigate to Power Automate:
+   ![](./media/pro-activ-gg-g11.png)
 
-   ```
-   https://make.powerautomate.com
-   ```
+1. If the **Welcome to Copilot Studio!** pop-up appears, click **Skip** to continue to the main dashboard.
 
-   Sign in and confirm access to Premium connectors and the Dynamics 365 connector are available under your license.
+   ![](./media/gs-travel-g3.png)
 
-1. Navigate to Microsoft AI Foundry:
+1. If the **We've updated you to the latest version of Microsoft Copilot Studio** pop-up appears, click **Got it!**.
 
-   ```
-   https://ai.azure.com
-   ```
+   ![](./media/pro-activ-gg-g12.png)
 
-   Sign in and confirm the pre-provisioned Foundry project is visible, or confirm you have permission to create a new project.
+1. If the **What's new in Copilot Studio** pop-up appears, click the **Close (X)** icon to dismiss it.
 
-   > **Note:** If any service access is unavailable, navigate to the Environment tab in your challenge portal to retrieve alternate credentials or contact CloudLabs support.
+   ![](./media/pro-activ-gg-g13.png)
 
----
+1. In Copilot Studio, open the environment picker **(1)**, expand **Supported environments (2)**, and select **ODL_User <inject key="Deployment ID" enableCopy="false"></inject>'s Environment (3)** to switch.
 
-Now, click on the **Next** from the lower right corner to move on to the challenge.
+   ![](./media/ex1-travel-g6.png)
+
+Click **Next** at the bottom of the page to proceed to the next page.
 
 ## Happy Hacking!!
