@@ -52,7 +52,61 @@ Feel free to start, stop, or restart your virtual machine as needed from the Res
 
 ---
 
-## Copilot studio
+## Setup Copilot studio
+
+1. Open a new browser tab and navigate to the Power Platform admin center by entering the following URL:
+
+   ```
+   https://admin.powerplatform.microsoft.com
+   ```
+   
+1. In the **Power Platform admin center**, select **Manage (1)**, choose **Environments (2)**, and then click **ODL_User <inject key="DeploymentID" enableCopy="false"/>'s Environment (3)**.
+
+   ![](./media/uppowadminimg1.png)
+
+   >Note: Please note that you may occasionally see a temporary portal error during this step. This is a known behavior in the Power Platform and does not impact the environment creation process. If it appears, simply close the browser window of Power Platform.
+
+   >Environment provisioning can take up to 15 minutes, especially during periods of high usage. While this is in progress, you can proceed to Challenge 2, download the dataset, and prepare it for the next steps. By the time you’re done, your environment should be ready.
+
+1. In the environment page, click on **See all** under **S2S apps**.
+
+   ![](./media/pro-activ-gg-g3.png)
+
+1. In the next pane, click on **+ New app user**.
+
+   ![](./media/uppowadminimg3.png)
+
+1. On this page, check whether `https://sandboxailabs1001.onmicrosoft.com/cloudlabs.ai` is already added. If it is present, skip to Step 17. Otherwise, proceed with the steps below.
+
+   ![](./media/powerplat.png)
+
+1. In the create a new app user pane, under **App**, click on **+ Add an app**.
+
+   ![](./media/pro-activ-gg-g4.png)
+
+1. In the **Add an app from Microsoft Entra ID** pane, enter `https://sandboxailabs1001.onmicrosoft.com/cloudlabs.ai` in the search box **(1)**, select whichever app is available from the results **(2)**, and then click **Add (3)**.
+
+   ![](./media/pro-activ-gg-g5.png)
+
+1. Under **Business unit**, select the available business unit from the list **(2)**.
+
+   ![](./media/pro-activ-gg-g6.png)
+
+1. Beside **Security roles** click on **Edit** icon.
+
+   ![](./media/pro-activ-gg-g7.png)
+
+1. In the **Sync Permissions** pane, select **System Administrator (1)**, and then click **Save (2)**.
+
+   ![](./media/pro-activ-gg-g8.png)
+
+1. In the pop-up window, select **save**.
+
+   ![](./media/pro-activ-gg-g9.png)
+
+1. Review all the details and click on **Create**.
+
+   ![](./media/pro-activ-gg-g10.png)
 
 1. Navigate to **Microsoft Copilot Studio** by opening a new browser tab and entering the following URL:
 
