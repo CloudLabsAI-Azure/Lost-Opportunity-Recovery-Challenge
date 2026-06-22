@@ -66,45 +66,6 @@ A dataset of 20 closed-lost opportunity records has been prepared for this lab. 
 
    Save the file to your Desktop or Downloads folder. This CSV contains 20 lost deals across five loss reason categories (Pricing, Competitor, Product Fit, Long Approval Cycle, Delayed Response) and is the data source you will index in Challenge 1.
 
----
-
-## Verify Access to Required Services
-
-Confirm you can access all services that will be used during the challenge before you begin:
-
-1. From the Azure Portal, verify that the following resources are present in your assigned resource group:
-
-   - Azure Storage Account
-   - Azure AI Search instance
-   - Azure AI Foundry workspace (or confirm you can create one)
-
-1. Open a new browser tab and navigate to Microsoft Copilot Studio:
-
-   ```
-   https://copilotstudio.microsoft.com
-   ```
-
-   Sign in with the provided credentials and confirm access is granted.
-
-1. Open another browser tab and navigate to Power Automate:
-
-   ```
-   https://make.powerautomate.com
-   ```
-
-   Sign in and confirm access to Premium connectors and the Dynamics 365 connector are available under your license.
-
-1. Navigate to Microsoft AI Foundry:
-
-   ```
-   https://ai.azure.com
-   ```
-
-   Sign in and confirm the pre-provisioned Foundry project is visible, or confirm you have permission to create a new project.
-
-   > **Note:** If any service access is unavailable, navigate to the Environment tab in your challenge portal to retrieve alternate credentials or contact CloudLabs support.
-
----
 
 Now, click on the **Next** from the lower right corner to move on to the challenge.
 
