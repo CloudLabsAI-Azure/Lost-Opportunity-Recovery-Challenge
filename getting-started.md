@@ -6,7 +6,7 @@ We've prepared a seamless environment for you to explore and learn. Let's begin 
 
 Once you're ready to dive in, your virtual machine and challenge guide will be right at your fingertips within your web browser.
 
-![](./media/gs1.png)
+![](./media/know-ent-gs-g12.png)
 
 ### Exploring Your Challenge Resources
 
@@ -28,13 +28,11 @@ Feel free to start, stop, or restart your virtual machine as needed from the Res
 
 > **Note:** If the VM is not in use, please **deallocate** it to avoid unnecessary resource consumption.
 
----
-
 ## Let's Get Started with Microsoft Azure
 
 1. In the JumpVM, click on **Azure Portal** browser shortcut which is created on the desktop.
 
-   ![](./media/gs-up1.png)
+   ![](./media/know-ent-gs-g11.png)
 
 1. On the **Sign into Microsoft** tab, you will see the login screen. Enter the provided email or username and click **Next** to proceed.
 
@@ -54,19 +52,34 @@ Feel free to start, stop, or restart your virtual machine as needed from the Res
 
 ---
 
-## Download the Opportunity Dataset
+## Copilot studio
 
-A dataset of 20 closed-lost opportunity records has been prepared for this lab. You will upload this file to Azure Blob Storage in Challenge 1 - download it now so it is ready.
-
-1. Download the dataset file:
+1. Navigate to **Microsoft Copilot Studio** by opening a new browser tab and entering the following URL:
 
    ```
-   https://raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/main/data/opportunities.csv
+   https://copilotstudio.microsoft.com
    ```
 
-   Save the file to your Desktop or Downloads folder. This CSV contains 20 lost deals across five loss reason categories (Pricing, Competitor, Product Fit, Long Approval Cycle, Delayed Response) and is the data source you will index in Challenge 1.
+1. On the **Welcome to Microsoft Copilot Studio** screen, keep the default **country/region** selection and click **Get Started** to continue.
 
+   ![](./media/pro-activ-gg-g11.png)
 
-Now, click on the **Next** from the lower right corner to move on to the challenge.
+1. If the **Welcome to Copilot Studio!** pop-up appears, click **Skip** to continue to the main dashboard.
+
+   ![](./media/gs-travel-g3.png)
+
+1. If the **We've updated you to the latest version of Microsoft Copilot Studio** pop-up appears, click **Got it!**.
+
+   ![](./media/pro-activ-gg-g12.png)
+
+1. If the **What's new in Copilot Studio** pop-up appears, click the **Close (X)** icon to dismiss it.
+
+   ![](./media/pro-activ-gg-g13.png)
+
+1. In Copilot Studio, open the environment picker **(1)**, expand **Supported environments (2)**, and select **ODL_User <inject key="Deployment ID" enableCopy="false"></inject>'s Environment (3)** to switch.
+
+   ![](./media/ex1-travel-g6.png)
+
+Click **Next** at the bottom of the page to proceed to the next page.
 
 ## Happy Hacking!!
