@@ -46,7 +46,39 @@ Design topics that route different types of rep queries to the right behavior.
 
 ---
 
-### 3. CRM Automation with Power Automate
+### 3. Import Opportunity Data into Dynamics 365
+
+Before building the automation, populate Dynamics 365 Sales with the 20 lost opportunity records. The Power Automate flow you build next will be tested by marking one of these records as lost.
+
+> **Important:** You must import accounts **first**. The `Potential Customer` field on an Opportunity is a lookup to an Account record. If the Account does not exist when the opportunity row is imported, the row will fail with a lookup resolution error.
+
+#### Step A — Import Accounts
+
+- In Dynamics 365 Sales Hub, navigate to **Accounts**.
+- Select **Import data** from the toolbar and upload `accounts.csv`.
+- On the delimiter settings screen, confirm **Data Delimiter** is `Quotation mark (")` and **Field Delimiter** is `Comma (,)`, then click **Review Mapping**.
+- Confirm `Account Name` maps to **Account Name** (green check on the required field), then click **Finish Import**.
+- Wait for the import to complete and verify **20 Successes / 0 Errors** in **My Imports**.
+
+#### Step B — Import Opportunities
+
+- Navigate to **Opportunities** in Dynamics 365 Sales Hub.
+- Select **Import data** from the toolbar and upload `opportunities.csv`.
+- On the delimiter settings screen, confirm the same delimiter settings as above, then click **Review Mapping**.
+- On the mapping screen, verify or set the following:
+  - `Topic` → **Topic**
+  - `Potential Customer` → **Potential Customer** (lookup resolves to **Account**)
+  - `Est. Revenue` → **Est. Revenue** (select manually if shown as Not Mapped)
+  - `Actual Close Date` → **Actual Close Date**
+  - `Description` → **Description**
+- Click **Finish Import** and verify **20 Successes / 0 Errors** in **My Imports**.
+- Navigate to **My Open Opportunities** to confirm all 20 records appear with the correct Potential Customer and Est. Revenue values.
+
+> **Note:** Fields such as Est. Close Date, Contact, Probability, and Email will be blank — this is expected. These fields are not present in the source file and are not required for the lab automation to function.
+
+---
+
+### 4. CRM Automation with Power Automate
 
 Build the automation that ensures no lost deal goes unanalyzed. When a rep marks an opportunity as lost in Dynamics 365, the flow automatically runs AI analysis and creates a follow-up task.
 
@@ -62,51 +94,64 @@ Build the automation that ensures no lost deal goes unanalyzed. When a rep marks
   > **Note:** The Opportunities table can take a few seconds to appear in the dropdown. If it does not show, wait briefly and refresh - avoid using a custom value as that may break the binding.
 
 - Add a filter so the flow only runs when **Status Reason** equals **Lost**:
-  - In the trigger's **Advanced parameters**, set **Filter rows** to:
+  - In the trigger card, locate the **Filter rows** field (it appears directly below the **Scope** field — if you don't see it, click **Show all** under **Advanced parameters** to expand it).
+  - Click inside the **Filter rows** box and type the following OData expression exactly:
     ```
-    statuscode eq 5
+    statuscode eq 4
     ```
+  - `statuscode eq 4` is the Dataverse code for **Status Reason = Out-Sold** on the Opportunity table. This ensures the flow only runs when a rep closes a deal as Out-Sold, and not on every other modification to the record.
 
 - Add a **Microsoft Dataverse - Get a row by ID** action to retrieve the full opportunity record:
   - **Table name:** Opportunities
-  - **Row ID:** the unique opportunity identifier from the trigger output.
+  - **Row ID:** Click inside the **Row ID** field to open the dynamic content panel. Under **When a row is added, modified or deleted**, select **Opportunity** (described as *"Unique identifier of the opportunity"*).
 
-- Add an action to run AI analysis on the retrieved deal content. Use either of the following, depending on what your environment supports:
-  - **Option A - Foundry agent (recommended for this lab):** Use an **HTTP** action to POST to your Microsoft Foundry chat completions endpoint. Pass the opportunity **Topic** and **Description** in the request body and instruct the model to identify the primary loss reason and recommend one specific re-engagement action.
-  - **Option B - AI Builder:** Use **AI Builder - Create text with GPT** with the same instructions.
+- Add an **AI Builder - Run a prompt** action to run AI analysis on the retrieved deal:
+  - Click **+ New custom prompt** from the prompt dropdown.
+  - Name the prompt `Lost Opportunity Analysis`.
+  - Click **+ Add content** and add two **Text input** fields named `Topic` and `Description`. Add sample data to each:
+    - **Topic sample:** `Contoso Industrial Q3 Automation Upgrade`
+    - **Description sample:** `The procurement team requested a 22% discount. The CFO placed a spending cap of $240,000 and declined to escalate for budget exception approval.`
+  - Click inside the **Instructions** area and type the following prompt, using `/` to insert the input pills inline:
 
-  > **Note:** If AI Builder returns `EntitlementNotAvailable / NoCapacity`, your sandbox has no AI Builder credits - switch to the HTTP option (Option A) and call the Foundry endpoint directly.
+    ```
+    You are a sales recovery analyst. You have been given a lost sales opportunity.
 
-- Add a **Parse JSON** action on the AI response so you can reference the generated text downstream. For a Foundry chat completion response, the analysis text is at:
-  ```
-  choices[0].message.content
-  ```
+    Opportunity Topic: [Topic]
+    Deal Description: [Description]
+
+    Identify the primary loss reason from the description. Then recommend one specific, concrete re-engagement action the sales rep should take to recover this deal. Be specific to the deal — do not give generic advice.
+    ```
+
+  - Click **Test** to verify the model returns a valid response, then click **Save**.
+  - Back in the flow, map the prompt inputs:
+    - **Description** → select **Description** from the dynamic content panel under **Get a row by ID**
+    - **Topic** → select **Topic** from the dynamic content panel under **Get a row by ID**
 
 - Add a **Microsoft Dataverse - Add a new row** action to create a **Task** record:
   - **Table name:** Tasks
-  - **Subject:** `Lost Opportunity Analysis - @{Name}` (where `Name` comes from the Get a row by ID step)
-  - **Description:** the AI-generated text parsed in the previous step
-  - **Due Date:** `addDays(utcNow(), 5)`
+  - **Subject:** type `Lost Opportunity Analysis - ` then select **Topic** from dynamic content under **Get a row by ID**
+  - **Description:** click the **fx** (expression) button and enter:
+    ```
+    outputs('Run_a_prompt')?['body/text']
+    ```
+  - **Due Date:** click the **fx** button and enter:
+    ```
+    addDays(utcNow(), 5)
+    ```
 
   > **Note:** Do not populate any **Regarding (Opportunities)** lookup field with the raw opportunity GUID - this causes an `ODataUnrecognizedPathException` because Dataverse expects a full OData binding (`/opportunities(<id>)`), not a bare ID. Leave the Regarding field blank for this lab.
 
-- Add a **Condition** after the AI step to check whether the generated text is empty. If empty, use **Send an email (V2)** to notify the assigned rep to run manual analysis instead of creating an empty task.
-
-- Save and test the flow by opening one of your imported opportunities in Dynamics 365 and changing its **Status Reason** to **Lost**. Confirm a Task is created with the AI-generated analysis in the Description field.
+- Save the flow and test it by opening one of your imported opportunities in Dynamics 365 and closing it as **Out-Sold**. Confirm the flow runs successfully and a Task is created under **Activities** with the AI-generated analysis in the Description field.
 
 ---
 
-### 4. Publish and Validate
+### 5. Publish and Validate
 
-Publish the copilot and confirm the full system works end-to-end.
+Publish the copilot and confirm the end-to-end system works.
 
 - Publish the copilot to a **web channel** or **Microsoft Teams channel**.
 - Open the published channel and confirm the copilot loads and responds.
-- Run the following three validation scenarios through the live channel:
-  - **Scenario A - Competitor Loss Analysis:** Provide an opportunity lost to a named competitor. Confirm the response identifies the competitor, references comparable deals, and describes the loss pattern.
-  - **Scenario B - Pricing Strategy:** Select a deal lost due to pricing objection. Ask for a revised strategy. Confirm the response is specific to that deal's context - not generic cost-cutting advice.
-  - **Scenario C - Re-engagement Email:** Select a high-value lost deal. Request a re-engagement email. Confirm the email addresses the decision-maker by name or role, references specific concerns from the deal record, and includes a clear call to action.
-- All three responses must be grounded in indexed deal data with deal-level citations. Generic responses are not acceptable.
+- Ask the copilot about a lost deal from the dataset and confirm it returns a grounded response referencing indexed deal records.
 
 <validation step="6c0275b6-7954-4507-9d04-32e9ebd9ce83" />
  
@@ -121,13 +166,11 @@ Publish the copilot and confirm the full system works end-to-end.
 
 Before submitting, confirm the following:
 
-- The Copilot Studio agent is connected to your AI Search index.
-- Three conversation topics are created and tested in the canvas.
-- The fallback topic returns a "not found" message for out-of-scope queries.
+- The Copilot Studio agent is connected to your AI Search index and responds with grounded answers.
 - The copilot is published and accessible via a live channel.
-- The `Lost Opportunity Flow` runs successfully when an opportunity is closed as lost.
-- A follow-up Task is created in Dynamics 365 with AI-generated analysis content in the Description.
-- All three validation scenarios return grounded, cited responses through the live channel.
+- All 20 accounts and 20 opportunities are imported into Dynamics 365 with 0 errors.
+- The `Lost Opportunity Flow` runs successfully when an opportunity is closed.
+- A follow-up Task is created in Dynamics 365 with AI-generated analysis in the Description.
 
 ---
 

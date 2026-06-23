@@ -51,8 +51,11 @@ Set up the storage layer that holds the lost opportunity corpus.
 
 Prepare the models your index and agent will rely on.
 
+- Create a Microsoft Foundry project in the **<inject key="Region"></inject>** region.
+- Once the project is deployed, select **Navigate to Foundry portal** to open it.
+- In the Foundry portal, switch to the **old version** using the toggle at the top of the page.
 - In your Microsoft Foundry project, deploy the following two models:
-  - A chat completion model - use `gpt-4.1` or `gpt-4.1-mini` (whichever is available in your region).
+  - A chat completion model - use `gpt-4.1` or `gpt-4.1-mini`.
   - An embedding model - use `text-embedding-ada-002`.
 - Note the deployment names - you will need them when configuring the index and agent.
 
@@ -71,6 +74,8 @@ Build a vector search index from the opportunity data in Blob Storage.
 
 - Create an Azure AI Search instance (Basic SKU).
 - Use the **Import data** option in AI Search to connect to your `lost-opportunities` blob container.
+- On the **Add your data** page, select your subscription, storage account, and blob container. Set **Parsing mode** to **Delimited text**, ensure **First line contains header** is selected, and keep the delimiter as `,`.
+- On the **Vectorize your text** page, select the **Description** column to vectorize, set **Kind** to **Microsoft Foundry**, select your subscription and Microsoft Foundry project, and choose your **text-embedding-ada-002** model deployment.
 - Set the vectorizer kind to **Microsoft Foundry**, and select your `text-embedding-ada-002` deployment. Run the indexer.
 
 <validation step="98c45519-9031-4efe-9727-8fb4b62d50f6" />
