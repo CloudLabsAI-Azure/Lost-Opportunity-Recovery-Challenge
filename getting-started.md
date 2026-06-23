@@ -54,15 +54,19 @@ Feel free to start, stop, or restart your virtual machine as needed from the Res
 
 ## Download the Opportunity Dataset
 
-A dataset of 20 closed-lost opportunity records has been prepared for this lab. You will upload this file to Azure Blob Storage in Challenge 1 - download it now so it is ready.
+Two data files have been prepared for this lab. Download the zip archive now — it contains both files you will need across the challenges.
 
-1. Download the dataset file:
+1. Download the dataset archive:
 
    ```
-   https://raw.githubusercontent.com/CloudLabsAI-Azure/Lost-Opportunity-Recovery-Challenge/main/data/opportunities.csv
+   https://github.com/CloudLabsAI-Azure/hack-in-a-day-data/archive/refs/heads/lost-dropped-opportunities.zip
    ```
 
-   Save the file to your Desktop or Downloads folder. This CSV contains 20 lost deals across five loss-reason categories (Pricing, Competitor, Product Fit, Long Approval Cycle, Delayed Response) and is the data source you will index in Challenge 1.
+1. Once downloaded, extract the zip. Inside you will find two files:
+   - **`opportunities.csv`** — 20 closed-lost opportunity records across five loss-reason categories (Pricing, Competitor, Product Fit, Long Approval Cycle, Delayed Response). You will upload this to Azure Blob Storage in Challenge 1 and import it into Dynamics 365 in Challenge 2.
+   - **`accounts.csv`** — the 20 company (Account) records that correspond to the opportunities. You will import this into Dynamics 365 in Challenge 2 **before** importing the opportunities file, so that the Potential Customer lookup field resolves correctly.
+
+   Save both extracted files to your Desktop or Downloads folder.
 
 ---
 

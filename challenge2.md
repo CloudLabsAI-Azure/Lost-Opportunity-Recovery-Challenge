@@ -46,7 +46,39 @@ Design topics that route different types of rep queries to the right behavior.
 
 ---
 
-### 3. CRM Automation with Power Automate
+### 3. Import Opportunity Data into Dynamics 365
+
+Before building the automation, populate Dynamics 365 Sales with the 20 lost opportunity records. The Power Automate flow you build next will be tested by marking one of these records as lost.
+
+> **Important:** You must import accounts **first**. The `Potential Customer` field on an Opportunity is a lookup to an Account record. If the Account does not exist when the opportunity row is imported, the row will fail with a lookup resolution error.
+
+#### Step A — Import Accounts
+
+- In Dynamics 365 Sales Hub, navigate to **Accounts**.
+- Select **Import data** from the toolbar and upload `accounts.csv`.
+- On the delimiter settings screen, confirm **Data Delimiter** is `Quotation mark (")` and **Field Delimiter** is `Comma (,)`, then click **Review Mapping**.
+- Confirm `Account Name` maps to **Account Name** (green check on the required field), then click **Finish Import**.
+- Wait for the import to complete and verify **20 Successes / 0 Errors** in **My Imports**.
+
+#### Step B — Import Opportunities
+
+- Navigate to **Opportunities** in Dynamics 365 Sales Hub.
+- Select **Import data** from the toolbar and upload `opportunities.csv`.
+- On the delimiter settings screen, confirm the same delimiter settings as above, then click **Review Mapping**.
+- On the mapping screen, verify or set the following:
+  - `Topic` → **Topic** ✓
+  - `Potential Customer` → **Potential Customer** (lookup resolves to **Account**) ✓
+  - `Est. Revenue` → **Est. Revenue** (select manually if shown as Not Mapped)
+  - `Actual Close Date` → **Actual Close Date** ✓
+  - `Description` → **Description** ✓
+- Click **Finish Import** and verify **20 Successes / 0 Errors** in **My Imports**.
+- Navigate to **My Open Opportunities** to confirm all 20 records appear with the correct Potential Customer and Est. Revenue values.
+
+> **Note:** Fields such as Est. Close Date, Contact, Probability, and Email will be blank — this is expected. These fields are not present in the source file and are not required for the lab automation to function.
+
+---
+
+### 4. CRM Automation with Power Automate
 
 Build the automation that ensures no lost deal goes unanalyzed. When a rep marks an opportunity as lost in Dynamics 365, the flow automatically runs AI analysis and creates a follow-up task.
 
@@ -96,7 +128,7 @@ Build the automation that ensures no lost deal goes unanalyzed. When a rep marks
 
 ---
 
-### 4. Publish and Validate
+### 5. Publish and Validate
 
 Publish the copilot and confirm the full system works end-to-end.
 
@@ -125,6 +157,7 @@ Before submitting, confirm the following:
 - Three conversation topics are created and tested in the canvas.
 - The fallback topic returns a "not found" message for out-of-scope queries.
 - The copilot is published and accessible via a live channel.
+- All 20 accounts and 20 opportunities are imported into Dynamics 365 with 0 errors.
 - The `Lost Opportunity Flow` runs successfully when an opportunity is closed as lost.
 - A follow-up Task is created in Dynamics 365 with AI-generated analysis content in the Description.
 - All three validation scenarios return grounded, cited responses through the live channel.
