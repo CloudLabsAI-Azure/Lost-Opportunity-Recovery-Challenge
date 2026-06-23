@@ -97,9 +97,9 @@ Build the automation that ensures no lost deal goes unanalyzed. When a rep marks
   - In the trigger card, locate the **Filter rows** field (it appears directly below the **Scope** field — if you don't see it, click **Show all** under **Advanced parameters** to expand it).
   - Click inside the **Filter rows** box and type the following OData expression exactly:
     ```
-    statuscode eq 5
+    statuscode eq 4
     ```
-  - `statuscode eq 5` is the Dataverse code for **Status Reason = Lost** on the Opportunity table. This ensures the flow only runs when a rep marks a deal as lost, and not on every other modification to the record.
+  - `statuscode eq 4` is the Dataverse code for **Status Reason = Out-Sold** on the Opportunity table. This ensures the flow only runs when a rep closes a deal as Out-Sold, and not on every other modification to the record.
 
 - Add a **Microsoft Dataverse - Get a row by ID** action to retrieve the full opportunity record:
   - **Table name:** Opportunities
@@ -141,21 +141,17 @@ Build the automation that ensures no lost deal goes unanalyzed. When a rep marks
 
   > **Note:** Do not populate any **Regarding (Opportunities)** lookup field with the raw opportunity GUID - this causes an `ODataUnrecognizedPathException` because Dataverse expects a full OData binding (`/opportunities(<id>)`), not a bare ID. Leave the Regarding field blank for this lab.
 
-- Save the flow and test it by opening one of your imported opportunities in Dynamics 365 and changing its **Status Reason** to **Lost**. Confirm a Task is created with the AI-generated analysis in the Description field.
+- Save the flow and test it by opening one of your imported opportunities in Dynamics 365 and closing it as **Out-Sold**. Confirm the flow runs successfully and a Task is created under **Activities** with the AI-generated analysis in the Description field.
 
 ---
 
 ### 5. Publish and Validate
 
-Publish the copilot and confirm the full system works end-to-end.
+Publish the copilot and confirm the end-to-end system works.
 
 - Publish the copilot to a **web channel** or **Microsoft Teams channel**.
 - Open the published channel and confirm the copilot loads and responds.
-- Run the following three validation scenarios through the live channel:
-  - **Scenario A - Competitor Loss Analysis:** Provide an opportunity lost to a named competitor. Confirm the response identifies the competitor, references comparable deals, and describes the loss pattern.
-  - **Scenario B - Pricing Strategy:** Select a deal lost due to pricing objection. Ask for a revised strategy. Confirm the response is specific to that deal's context - not generic cost-cutting advice.
-  - **Scenario C - Re-engagement Email:** Select a high-value lost deal. Request a re-engagement email. Confirm the email addresses the decision-maker by name or role, references specific concerns from the deal record, and includes a clear call to action.
-- All three responses must be grounded in indexed deal data with deal-level citations. Generic responses are not acceptable.
+- Ask the copilot about a lost deal from the dataset and confirm it returns a grounded response referencing indexed deal records.
 
 <validation step="6c0275b6-7954-4507-9d04-32e9ebd9ce83" />
  
@@ -170,14 +166,11 @@ Publish the copilot and confirm the full system works end-to-end.
 
 Before submitting, confirm the following:
 
-- The Copilot Studio agent is connected to your AI Search index.
-- Three conversation topics are created and tested in the canvas.
-- The fallback topic returns a "not found" message for out-of-scope queries.
+- The Copilot Studio agent is connected to your AI Search index and responds with grounded answers.
 - The copilot is published and accessible via a live channel.
 - All 20 accounts and 20 opportunities are imported into Dynamics 365 with 0 errors.
-- The `Lost Opportunity Flow` runs successfully when an opportunity is closed as lost.
-- A follow-up Task is created in Dynamics 365 with AI-generated analysis content in the Description.
-- All three validation scenarios return grounded, cited responses through the live channel.
+- The `Lost Opportunity Flow` runs successfully when an opportunity is closed.
+- A follow-up Task is created in Dynamics 365 with AI-generated analysis in the Description.
 
 ---
 
