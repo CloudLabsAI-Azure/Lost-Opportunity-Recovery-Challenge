@@ -31,6 +31,13 @@ Create the conversational interface that gives sales reps access to the Foundry 
 - Connect Azure AI Search as a knowledge source, pointing to your `lost-opportunities` index from Challenge 1.
 - Configure the agent's instructions to enforce grounded, cited responses - every answer must reference specific indexed deal records, not generic sales advice.
 
+<validation step="6c0275b6-7954-4507-9d04-32e9ebd9ce83" />
+ 
+> **Congratulations** on completing the Challenge! Now, it's time to validate it. Here are the steps:
+> - Hit the Validate button for the corresponding Challenge. If you receive a success message, you can proceed to the next Challenge. 
+> - If not, carefully read the error message and retry the step, following the instructions in the lab guide.
+> - If you need any assistance, please contact us at cloudlabs-support@spektrasystems.com. We are available 24/7 to help.
+
 ---
 
 ### 2. Conversation Topics
@@ -43,6 +50,13 @@ Design topics that route different types of rep queries to the right behavior.
   - **Re-engagement Email** - the rep requests a draft email for a specific lost deal; the agent produces a personalized email referencing the decision-maker's documented concerns, the revised approach, and a clear call to action.
 - Configure a fallback topic that surfaces a clear "not found" message rather than fabricating an answer for out-of-scope questions.
 - Test each topic in the Copilot Studio canvas before publishing. Every response for an in-scope query should include a citation to the source deal record.
+
+<validation step="6c0275b6-7954-4507-9d04-32e9ebd9ce83" />
+ 
+> **Congratulations** on completing the Challenge! Now, it's time to validate it. Here are the steps:
+> - Hit the Validate button for the corresponding Challenge. If you receive a success message, you can proceed to the next Challenge. 
+> - If not, carefully read the error message and retry the step, following the instructions in the lab guide.
+> - If you need any assistance, please contact us at cloudlabs-support@spektrasystems.com. We are available 24/7 to help.
 
 ---
 
@@ -143,6 +157,13 @@ Build the automation that ensures no lost deal goes unanalyzed. When a rep marks
 
 - Save the flow and test it by opening one of your imported opportunities in Dynamics 365 and closing it as **Out-Sold**. Confirm the flow runs successfully and a Task is created under **Activities** with the AI-generated analysis in the Description field.
 
+<validation step="502a3add-4312-4ef6-b9a0-0bd35d454d83" />
+ 
+> **Congratulations** on completing the Challenge! Now, it's time to validate it. Here are the steps:
+> - Hit the Validate button for the corresponding Challenge. If you receive a success message, you can proceed to the next Challenge. 
+> - If not, carefully read the error message and retry the step, following the instructions in the lab guide.
+> - If you need any assistance, please contact us at cloudlabs-support@spektrasystems.com. We are available 24/7 to help.
+
 ---
 
 ### 5. Publish and Validate
@@ -153,7 +174,7 @@ Publish the copilot and confirm the end-to-end system works.
 - Open the published channel and confirm the copilot loads and responds.
 - Ask the copilot about a lost deal from the dataset and confirm it returns a grounded response referencing indexed deal records.
 
-<validation step="6c0275b6-7954-4507-9d04-32e9ebd9ce83" />
+<validation step="2e4b3a3b-ec54-4cce-beec-206dbeef936f" />
  
 > **Congratulations** on completing the Challenge! Now, it's time to validate it. Here are the steps:
 > - Hit the Validate button for the corresponding Challenge. If you receive a success message, you can proceed to the next Challenge. 
