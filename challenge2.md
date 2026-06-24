@@ -194,5 +194,3 @@ Before submitting, confirm the following:
 - A follow-up Task is created in Dynamics 365 with AI-generated analysis in the Description.
 
 ---
-
-Click **Next** at the bottom of the page to proceed to the Bonus Challenge.
