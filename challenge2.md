@@ -31,7 +31,7 @@ Create the conversational interface that gives sales reps access to the Foundry 
 - Connect Azure AI Search as a knowledge source, pointing to your `lost-opportunities` index from Challenge 1.
 - Configure the agent's instructions to enforce grounded, cited responses - every answer must reference specific indexed deal records, not generic sales advice.
 
-<validation step="6c0275b6-7954-4507-9d04-32e9ebd9ce83" />
+<validation step="502a3add-4312-4ef6-b9a0-0bd35d454d83" />
  
 > **Congratulations** on completing the Challenge! Now, it's time to validate it. Here are the steps:
 > - Hit the Validate button for the corresponding Challenge. If you receive a success message, you can proceed to the next Challenge. 
@@ -50,13 +50,6 @@ Design topics that route different types of rep queries to the right behavior.
   - **Re-engagement Email** - the rep requests a draft email for a specific lost deal; the agent produces a personalized email referencing the decision-maker's documented concerns, the revised approach, and a clear call to action.
 - Configure a fallback topic that surfaces a clear "not found" message rather than fabricating an answer for out-of-scope questions.
 - Test each topic in the Copilot Studio canvas before publishing.
-
-<validation step="6c0275b6-7954-4507-9d04-32e9ebd9ce83" />
- 
-> **Congratulations** on completing the Challenge! Now, it's time to validate it. Here are the steps:
-> - Hit the Validate button for the corresponding Challenge. If you receive a success message, you can proceed to the next Challenge. 
-> - If not, carefully read the error message and retry the step, following the instructions in the lab guide.
-> - If you need any assistance, please contact us at cloudlabs-support@spektrasystems.com. We are available 24/7 to help.
 
 ---
 
@@ -164,7 +157,7 @@ Build the automation that ensures no lost deal goes unanalyzed. When a rep marks
 - Navigate to **Power Automate**, open **Lost Opportunity Flow**, and select **Run history** to confirm the flow ran successfully with a green check.
 - Return to Dynamics 365, reopen the same opportunity, and select **Activities** to confirm a new **Task** record was created with the AI-generated analysis in the Description field.
 
-<validation step="502a3add-4312-4ef6-b9a0-0bd35d454d83" />
+<validation step="6c0275b6-7954-4507-9d04-32e9ebd9ce83" />
  
 > **Congratulations** on completing the Challenge! Now, it's time to validate it. Here are the steps:
 > - Hit the Validate button for the corresponding Challenge. If you receive a success message, you can proceed to the next Challenge. 
