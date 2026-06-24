@@ -104,9 +104,9 @@ Build the automation that ensures no lost deal goes unanalyzed. When a rep marks
   - In the trigger card, locate the **Filter rows** field (it appears directly below the **Scope** field — if you don't see it, click **Show all** under **Advanced parameters** to expand it).
   - Click inside the **Filter rows** box and type the following OData expression exactly:
     ```
-    statuscode eq 4
+    statuscode eq 5
     ```
-  - `statuscode eq 4` is the Dataverse code for **Status Reason = Out-Sold** on the Opportunity table. This ensures the flow only runs when a rep closes a deal as Out-Sold, and not on every other modification to the record.
+  - `statuscode eq 5` is the Dataverse code for **Status Reason = Out-Sold** on the Opportunity table. This ensures the flow only runs when a rep closes a deal as Out-Sold, and not on every other modification to the record.
 
 - Add a **Microsoft Dataverse - Get a row by ID** action to retrieve the full opportunity record:
   - **Table name:** Opportunities
