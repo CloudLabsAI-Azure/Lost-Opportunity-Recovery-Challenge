@@ -106,13 +106,6 @@ Build the AI agent in Microsoft Foundry and connect it to your loss intelligence
   - Generate a re-engagement profile for [specific opportunity].
   - What is the conversion likelihood if we apply [revised strategy] to [specific deal]?
 
-<validation step="4b682a35-ba5e-49e6-89db-b03f0b61de68" />
- 
-> **Congratulations** on completing the Challenge! Now, it's time to validate it. Here are the steps:
-> - Hit the Validate button for the corresponding Challenge. If you receive a success message, you can proceed to the next Challenge. 
-> - If not, carefully read the error message and retry the step, following the instructions in the lab guide.
-> - If you need any assistance, please contact us at cloudlabs-support@spektrasystems.com. We are available 24/7 to help.
-
 ---
 
 ## Success Criteria
