@@ -101,10 +101,6 @@ Build the AI agent in Microsoft Foundry and connect it to your loss intelligence
   - Produce a re-engagement profile for a specific lost deal, including decision-maker concerns, primary loss reason, and recommended opening for re-contact.
 - Test the agent in the Microsoft Foundry playground with at least five queries covering different scenarios:
   - What are the top loss patterns in the dataset?
-  - What is the revised strategy for deals lost due to pricing objections?
-  - What is the revised strategy for deals lost to a named competitor?
-  - Generate a re-engagement profile for [specific opportunity].
-  - What is the conversion likelihood if we apply [revised strategy] to [specific deal]?
 
 ---
 

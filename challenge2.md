@@ -49,7 +49,7 @@ Design topics that route different types of rep queries to the right behavior.
   - **Revised Strategy** - the rep describes the loss context; the agent returns a specific, actionable revised strategy grounded in historical patterns from the index - not generic advice.
   - **Re-engagement Email** - the rep requests a draft email for a specific lost deal; the agent produces a personalized email referencing the decision-maker's documented concerns, the revised approach, and a clear call to action.
 - Configure a fallback topic that surfaces a clear "not found" message rather than fabricating an answer for out-of-scope questions.
-- Test each topic in the Copilot Studio canvas before publishing. Every response for an in-scope query should include a citation to the source deal record.
+- Test each topic in the Copilot Studio canvas before publishing.
 
 <validation step="6c0275b6-7954-4507-9d04-32e9ebd9ce83" />
  
@@ -122,10 +122,7 @@ Build the automation that ensures no lost deal goes unanalyzed. When a rep marks
 - Add an **AI Builder - Run a prompt** action to run AI analysis on the retrieved deal:
   - Click **+ New custom prompt** from the prompt dropdown.
   - Name the prompt `Lost Opportunity Analysis`.
-  - Click **+ Add content** and add two **Text input** fields named `Topic` and `Description`. Add sample data to each:
-    - **Topic sample:** `Contoso Industrial Q3 Automation Upgrade`
-    - **Description sample:** `The procurement team requested a 22% discount. The CFO placed a spending cap of $240,000 and declined to escalate for budget exception approval.`
-  - Click inside the **Instructions** area and type the following prompt, using `/` to insert the input pills inline:
+  - Click inside the **Instructions** area and type the following prompt exactly as shown:
 
     ```
     You are a sales recovery analyst. You have been given a lost sales opportunity.
@@ -136,6 +133,10 @@ Build the automation that ensures no lost deal goes unanalyzed. When a rep marks
     Identify the primary loss reason from the description. Then recommend one specific, concrete re-engagement action the sales rep should take to recover this deal. Be specific to the deal — do not give generic advice.
     ```
 
+  - In the Instructions text, select the `[Topic]` placeholder, then click **+ Add content** and add a **Text input** field named `Topic` with the following sample data:
+    - **Topic sample:** `Contoso Industrial Q3 Automation Upgrade`
+  - Repeat for `[Description]`: select the `[Description]` placeholder, click **+ Add content**, add a **Text input** field named `Description` with the following sample data:
+    - **Description sample:** `The procurement team requested a 22% discount. The CFO placed a spending cap of $240,000 and declined to escalate for budget exception approval.`
   - Click **Test** to verify the model returns a valid response, then click **Save**.
   - Back in the flow, map the prompt inputs:
     - **Description** → select **Description** from the dynamic content panel under **Get a row by ID**
@@ -144,18 +145,24 @@ Build the automation that ensures no lost deal goes unanalyzed. When a rep marks
 - Add a **Microsoft Dataverse - Add a new row** action to create a **Task** record:
   - **Table name:** Tasks
   - **Subject:** type `Lost Opportunity Analysis - ` then select **Topic** from dynamic content under **Get a row by ID**
-  - **Description:** click the **fx** (expression) button and enter:
-    ```
-    outputs('Run_a_prompt')?['body/text']
-    ```
+  - **Description:** click inside the field to open the dynamic content panel, then under **Run a prompt** select **Text**.
   - **Due Date:** click the **fx** button and enter:
     ```
     addDays(utcNow(), 5)
     ```
 
-  > **Note:** Do not populate any **Regarding (Opportunities)** lookup field with the raw opportunity GUID - this causes an `ODataUnrecognizedPathException` because Dataverse expects a full OData binding (`/opportunities(<id>)`), not a bare ID. Leave the Regarding field blank for this lab.
+  > **Note:** Leave the Regarding field blank.
 
-- Save the flow and test it by opening one of your imported opportunities in Dynamics 365 and closing it as **Out-Sold**. Confirm the flow runs successfully and a Task is created under **Activities** with the AI-generated analysis in the Description field.
+- Save the flow and confirm there are no configuration errors, then proceed to test it using the steps below.
+
+#### Test the Flow
+
+- In Dynamics 365 Sales Hub, navigate to **Opportunities**.
+- Open any one of the 20 imported opportunity records.
+- In the command bar, select **Close as Lost**.
+- In the **Close Opportunity** dialog, set **Status Reason** to **Out-Sold** and select **OK**.
+- Navigate to **Power Automate**, open **Lost Opportunity Flow**, and select **Run history** to confirm the flow ran successfully with a green check.
+- Return to Dynamics 365, reopen the same opportunity, and select **Activities** to confirm a new **Task** record was created with the AI-generated analysis in the Description field.
 
 <validation step="502a3add-4312-4ef6-b9a0-0bd35d454d83" />
  
@@ -172,7 +179,6 @@ Publish the copilot and confirm the end-to-end system works.
 
 - Publish the copilot to a **web channel** or **Microsoft Teams channel**.
 - Open the published channel and confirm the copilot loads and responds.
-- Ask the copilot about a lost deal from the dataset and confirm it returns a grounded response referencing indexed deal records.
 
 <validation step="2e4b3a3b-ec54-4cce-beec-206dbeef936f" />
  
@@ -194,5 +200,3 @@ Before submitting, confirm the following:
 - A follow-up Task is created in Dynamics 365 with AI-generated analysis in the Description.
 
 ---
-
-Click **Next** at the bottom of the page to proceed to the Bonus Challenge.
